@@ -1,4 +1,3 @@
-import random
 from playwright.sync_api._generated import Page
 from typing import Tuple
 
@@ -72,11 +71,11 @@ class DashboardRetrieveIncidentAndCreateIncidentInfeasibleTask(
         self.agent_value_sysids = agent_value_sysids
         incident_numbers = []
         for _ in range(len(agent_full_names)):
-            incident_number = "INC" + str(random.randint(1000000, 9999999))
+            incident_number = "INC" + str(self.random.randint(1000000, 9999999))
             while (
                 incident_number in self.all_incident_numbers or incident_number in incident_numbers
             ):
-                incident_number = "INC" + str(random.randint(1000000, 9999999))
+                incident_number = "INC" + str(self.random.randint(1000000, 9999999))
             incident_numbers.append(incident_number)
 
         self.incident_numbers = incident_numbers

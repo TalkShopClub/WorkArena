@@ -1,4 +1,3 @@
-import random
 from playwright.sync_api._generated import Page
 from typing import Tuple
 
@@ -68,12 +67,12 @@ class DashboardRetrieveIncidentAndRequestItemTask(DashboardRetrieveIncidentAndDo
         requested_item_numbers = []
 
         for _ in range(len(agent_full_names)):
-            requested_item_number = "RITM" + str(random.randint(1000000, 9999999))
+            requested_item_number = "RITM" + str(self.random.randint(1000000, 9999999))
             while (
                 requested_item_number in current_requested_items_numbers
                 or requested_item_number in requested_item_numbers
             ):
-                requested_item_number = "RITM" + str(random.randint(1000000, 9999999))
+                requested_item_number = "RITM" + str(self.random.randint(1000000, 9999999))
             requested_item_numbers.append(requested_item_number)
 
         self.requested_item_numbers = requested_item_numbers
@@ -146,7 +145,7 @@ class DashboardRetrieveIncidentAndRequestItemTask(DashboardRetrieveIncidentAndDo
             goal = (
                 self.short_description
                 + f"\n1. Navigate to the Reports > View/Run page. \n"
-                + f"\n2. Given the title of the report, search for it on this page. The report shows the number of 'incidents' assigned to an 'agent'.\n"
+                + f"\n2. The title of the report is '{self.chart_title}'. Search for it on this page. The report shows the number of 'incidents' assigned to an 'agent'.\n"
                 + f"\n3. Find the agents with a number of incidents assigned greater than or equal to the {self.description_mapping[self.question]} of the number of assigned incidents across agents. For example, if you were asked to find the 'mean' or 'average' for a case where there are 4 agents assigned 1,2,3,2 incidents respectively, the mean would be 2. The list of agents required for solving the following task would be all the agents that have greater than or equal to 2 assigned incidents.\n"
                 + f"\n4. Navigate to Open Records > Items. \n"
                 + f"\n5. You have to create new 'item requests' from this page for all the agents based on the above criteria. Only fill the following fields when creating a new item request:- Item: {self.item}, Quantity: 1 and 'request' them for each agent using the 'Requested For' field.\n\n"

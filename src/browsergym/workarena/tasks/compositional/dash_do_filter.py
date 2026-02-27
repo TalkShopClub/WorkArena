@@ -1,4 +1,3 @@
-import random
 from playwright.sync_api._generated import Page
 
 from .dash_do_base import DashboardRetrieveIncidentAndDoTask, DashDoFinalTask
@@ -170,7 +169,7 @@ class DashboardRetrieveIncidentAndFilterAssetListTask(DashboardRetrieveIncidentA
             num_assets = self.random.choice(range(1, self.max_assets_per_agent))
             for _ in range(num_assets):
                 consumable_asset_data = {
-                    "asset_tag": "CONSUMABLE" + str(random.randint(100, 999)),
+                    "asset_tag": "CONSUMABLE" + str(self.random.randint(100, 999)),
                     "model": self.random.choice(consumables_sysids),
                     "model_category": consumable_category_sysid,
                     "assigned_to": agent_sysid,
@@ -186,7 +185,7 @@ class DashboardRetrieveIncidentAndFilterAssetListTask(DashboardRetrieveIncidentA
                 )
                 self.new_asset_sys_ids.append(response["result"]["sys_id"])
                 license_asset_data = {
-                    "asset_tag": "LICENSE" + str(random.randint(100, 999)),
+                    "asset_tag": "LICENSE" + str(self.random.randint(100, 999)),
                     "model": self.random.choice(license_sysids),
                     "model_category": license_category_sysid,
                     "assigned_to": agent_sysid,
@@ -228,7 +227,7 @@ class DashboardRetrieveIncidentAndFilterAssetListTask(DashboardRetrieveIncidentA
             goal = (
                 self.short_description
                 + f"\n1. Navigate to the Reports > View/Run page. \n"
-                + f"\n2. Given the title of the report, search for it on this page. The report shows the number of 'incidents' assigned to an 'agent'.\n"
+                + f"\n2. The title of the report is '{self.chart_title}'. Search for it on this page. The report shows the number of 'incidents' assigned to an 'agent'.\n"
                 + step_3
                 + f"\n4. Navigate to Portfolios > All Assets. \n"
                 + f"\nUsing the field {self.attribute_name} for the agent/ agents that fit the critera above, filter the list.\n"
@@ -334,7 +333,7 @@ class DashboardRetrieveIncidentAndFilterHardwareListTask(
             num_assets = self.random.choice(range(1, self.max_assets_per_agent))
             for _ in range(num_assets):
                 hardware_asset_data = {
-                    "asset_tag": "CONSUMABLE" + str(random.randint(100, 999)),
+                    "asset_tag": "CONSUMABLE" + str(self.random.randint(100, 999)),
                     "model": self.random.choice(hardware_sysids),
                     "model_category": hardware_category_sysid,
                     "assigned_to": agent_sysid,
@@ -376,7 +375,7 @@ class DashboardRetrieveIncidentAndFilterHardwareListTask(
             goal = (
                 self.short_description
                 + f"\n1. Navigate to the Reports > View/Run page. \n"
-                + f"\n2. Given the title of the report, search for it on this page. The report shows the number of 'incidents' assigned to an 'agent'.\n"
+                + f"\n2. The title of the report is '{self.chart_title}'. Search for it on this page. The report shows the number of 'incidents' assigned to an 'agent'.\n"
                 + step_3
                 + f"\n4. Navigate to Portfolios > Hardware Assets. \n"
                 + f"\nUsing the field {self.attribute_name} for the agent/ agents that fit the critera above, filter the list.\n"
@@ -483,7 +482,7 @@ class DashboardRetrieveIncidentAndFilterIncidentListTask(
             goal = (
                 self.short_description
                 + f"\n1. Navigate to the Reports > View/Run page. \n"
-                + f"\n2. Given the title of the report, search for it on this page. The report shows the number of 'incidents' assigned to an 'agent'.\n"
+                + f"\n2. The title of the report is '{self.chart_title}'. Search for it on this page. The report shows the number of 'incidents' assigned to an 'agent'.\n"
                 + step_3
                 + f"\n4. Navigate to Service Desk > Incidents. \n"
                 + f"\nUsing the field {self.attribute_name} for the agent/ agents that fit the critera above, filter the list.\n"
@@ -577,7 +576,7 @@ class DashboardRetrieveIncidentAndFilterUserListTask(DashboardRetrieveIncidentAn
             goal = (
                 self.short_description
                 + f"\n1. Navigate to the Reports > View/Run page. \n"
-                + f"\n2. Given the title of the report, search for it on this page. The report shows the number of 'incidents' assigned to an 'agent'.\n"
+                + f"\n2. The title of the report is '{self.chart_title}'. Search for it on this page. The report shows the number of 'incidents' assigned to an 'agent'.\n"
                 + step_3
                 + f"\n4. Navigate to Organization > Users. \n"
                 + f"\nUsing the field {self.attribute_name} for the agent/ agents that fit the critera above, filter the list.\n"

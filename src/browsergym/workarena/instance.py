@@ -151,6 +151,8 @@ class SNowInstance:
         self.snow_credentials = snow_credentials
         self.check_status()
 
+        print(f"[ServiceNow] Instance: {self.snow_url}; Credentials: {self.snow_credentials}")
+
     def check_status(self):
         """
         Check the status of the ServiceNow instance. Raises an error if the instance is not ready to be used.

@@ -3,15 +3,18 @@ A bunch of base classes
 
 """
 
+import hashlib
 import logging
+import random as _stdlib_random
 
 import numpy as np
 import playwright.sync_api
 
 from abc import ABC, abstractmethod
 from copy import deepcopy
+from faker import Faker
 from typing import List, Optional, Tuple
-from uuid import uuid4
+from uuid import UUID
 from urllib import parse
 
 from browsergym.core.task import AbstractBrowserTask
@@ -57,6 +60,7 @@ class AbstractServiceNowTask(AbstractBrowserTask, ABC):
 
         """
         super().__init__(seed)
+        self.seed = seed
 
         # task properties, will be used to set up the browsergym environment
         self.viewport = {"width": 1280, "height": 720}
@@ -72,8 +76,8 @@ class AbstractServiceNowTask(AbstractBrowserTask, ABC):
             self.final_url = self.start_url
         self.final_url_ = parse.urlparse(self.final_url)
 
-        # Set the task's unique ID
-        self.unique_id = str(uuid4())
+        # Set the task's unique ID (deterministic from seed)
+        self.unique_id = self._deterministic_uuid(0)
         # Flag to ensure the task is setup only once
         self.task_is_setup = False
         self.delete_user_on_teardown = False
@@ -126,6 +130,11 @@ class AbstractServiceNowTask(AbstractBrowserTask, ABC):
         # Set the page timeout
         page.set_default_timeout(SNOW_BROWSER_TIMEOUT)
 
+        # Seed all external randomness sources (Python random, Faker) for reproducibility.
+        # self.random (np.random.RandomState) is already seeded; this covers module-level
+        # Faker instances and bare `random.xyz()` calls across the codebase.
+        self._seed_external_rng()
+
         # Create a new user to run the task if this is the starting task
         if do_start:
             self._base_initial_instance = self.instance
@@ -135,8 +144,8 @@ class AbstractServiceNowTask(AbstractBrowserTask, ABC):
             self.instance = deepcopy(self.instance)
             self.instance.snow_credentials = (self._base_user_name, self._base_user_password)
             self.delete_user_on_teardown = True
-        # Set the task's unique ID
-        self.unique_id = str(uuid4())
+        # Set the task's unique ID (deterministic from seed)
+        self.unique_id = self._deterministic_uuid(1)
 
         # Configure the task
         goal, info = self.setup_goal(page=page)
@@ -181,6 +190,17 @@ class AbstractServiceNowTask(AbstractBrowserTask, ABC):
 
         # Navigate to the task's url
         page.goto(self.start_url)
+
+    def _deterministic_uuid(self, counter: int) -> str:
+        """Generate a deterministic UUID from the task seed and a counter."""
+        key = f"workarena_{self.seed}_{counter}"
+        return str(UUID(hashlib.md5(key.encode()).hexdigest()))
+
+    def _seed_external_rng(self) -> None:
+        """Seed Python's random module and all Faker instances for reproducibility."""
+        if self.seed is not None:
+            _stdlib_random.seed(self.seed)
+            Faker.seed(self.seed)
 
     def teardown(self) -> None:
         """

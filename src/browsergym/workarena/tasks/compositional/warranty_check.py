@@ -181,7 +181,7 @@ class GetWarrantyExpirationDateTask(CompositionalTask, HumanEvalTask):
 
         assert self.user_sys_id, f"Failed to create user {first_name} {last_name}"
         self.warranty_expiration_date = str(fake.date_between(start_date="-1y", end_date="+1y"))
-        asset_tag = "P" + str(id(self) % (10**8)).zfill(8)
+        asset_tag = "P" + str(self.random.randint(0, 10**8)).zfill(8)
         (
             computer_sys_id,
             _,

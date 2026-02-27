@@ -1,4 +1,3 @@
-import random
 from playwright.sync_api._generated import Page
 from typing import Tuple
 
@@ -62,11 +61,11 @@ class DashboardRetrieveIncidentAndCreateIncidentTask(DashboardRetrieveIncidentAn
         self.agent_value_sysids = agent_value_sysids
         incident_numbers = []
         for _ in range(len(agent_full_names)):
-            incident_number = "INC" + str(random.randint(1000000, 9999999))
+            incident_number = "INC" + str(self.random.randint(1000000, 9999999))
             while (
                 incident_number in self.all_incident_numbers or incident_number in incident_numbers
             ):
-                incident_number = "INC" + str(random.randint(1000000, 9999999))
+                incident_number = "INC" + str(self.random.randint(1000000, 9999999))
             incident_numbers.append(incident_number)
 
         self.incident_numbers = incident_numbers
@@ -154,7 +153,7 @@ class DashboardRetrieveIncidentAndCreateIncidentTask(DashboardRetrieveIncidentAn
             goal = (
                 self.short_description
                 + f"\n1. Navigate to the Reports > View/Run page. \n"
-                + f"\n2. Given the title of the report, search for it on this page. The report shows the number of 'incidents' assigned to an 'agent'.\n"
+                + f"\n2. The title of the report is '{self.chart_title}'. Search for it on this page. The report shows the number of 'incidents' assigned to an 'agent'.\n"
                 + f"\n3. Find the agents with a number of incidents assigned less than or equal to the {self.description_mapping[self.question]} of the number of assigned incidents across agents. For example, if you were asked to find the 'mean' or 'average' for a case where there are 4 agents assigned 1,2,3,2 incidents respectively, the mean would be 2. The list of agents required for solving the following task would be all the agents that have less than or equal to 2 assigned incidents.\n"
                 + f"\n4. Navigate to Service Desk > Incidents. \n"
                 + f"\n5. You have to create new 'incidents' from this page for all the agents based on the above criteria. Only fill the following fields when creating a new incident:- Category: 'Inquiry / Help', Impact: '1 - High', Urgency: '1 - High', Short description: 'Compulsory training for employee in probation', Caller: '{self.user_name}' and 'assign' them to each agent using the 'Assigned to' field.\n\n"

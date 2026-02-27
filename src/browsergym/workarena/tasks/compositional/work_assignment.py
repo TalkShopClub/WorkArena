@@ -1,6 +1,5 @@
 from typing import Tuple
 from faker import Faker
-import random
 
 fake = Faker()
 
@@ -93,17 +92,16 @@ class WorkAssignmentTask(CompositionalTask):
         )["result"]
         all_incident_numbers = [incident["number"] for incident in all_existing_incidents]
         new_incident_numbers = []
+        _id_prefix = str(self.random.randint(0, 10**8)).zfill(8)[:4]
         for _ in range(number_assignments):
             incident_number = (
-                self.prefix + str(id(self) % (10**8)).zfill(8)[:4] + str(random.randint(100, 999))
+                self.prefix + _id_prefix + str(self.random.randint(100, 999))
             )
             while (
                 incident_number in all_incident_numbers or incident_number in new_incident_numbers
             ):
                 incident_number = (
-                    self.prefix
-                    + str(id(self) % (10**8)).zfill(8)[:4]
-                    + str(random.randint(100, 999))
+                    self.prefix + _id_prefix + str(self.random.randint(100, 999))
                 )
             new_incident_numbers.append(incident_number)
 
@@ -479,17 +477,16 @@ class PriorityAssignmentTask(CompositionalTask):
         all_incident_numbers = [incident["number"] for incident in all_existing_incidents]
 
         new_incident_numbers = []
+        _id_prefix = str(self.random.randint(0, 10**8)).zfill(8)[:4]
         for _ in range(number_assignments):
             incident_number = (
-                self.prefix + str(id(self) % (10**8)).zfill(8)[:4] + str(random.randint(100, 999))
+                self.prefix + _id_prefix + str(self.random.randint(100, 999))
             )
             while (
                 incident_number in all_incident_numbers or incident_number in new_incident_numbers
             ):
                 incident_number = (
-                    self.prefix
-                    + str(id(self) % (10**8)).zfill(8)[:4]
-                    + str(random.randint(100, 999))
+                    self.prefix + _id_prefix + str(self.random.randint(100, 999))
                 )
             new_incident_numbers.append(incident_number)
         incident_category = []

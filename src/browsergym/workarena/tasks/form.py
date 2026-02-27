@@ -129,7 +129,7 @@ class ServiceNowFormTask(AbstractServiceNowTask):
         self.table_name = self.form_url.split("/")[-1].split(".do")[0]
 
         # Key in which the sys_id of the created record will be stored in the local storage
-        self.session_sys_id_field = f"{id(self)}.record_sys_id"
+        self.session_sys_id_field = f"{self.unique_id}.record_sys_id"
 
         # Fields that should have a unique value (will append them with a uuid)
         self.unique_valued_fields = unique_valued_fields

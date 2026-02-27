@@ -43,7 +43,7 @@ class UpdatePrivateTask(AbstractServiceNowTask, CompositionalBuildingBlockTask):
         self.set_as_completed = set_as_completed
         # 3 is the state for "Closed-Complete", 4 is "Closed-Incomplete", 7 is "Closed-Skipped"
         self.allowed_options = ["3"] if self.set_as_completed else ["4", "7"]
-        self.private_task_id = "PTSK" + str(id(self) % (10**8)).zfill(8)
+        self.private_task_id = "PTSK" + str(self.random.randint(0, 10**8)).zfill(8)
         if self.fixed_config is None:
             self.config = {
                 "task_description": "Close private task",

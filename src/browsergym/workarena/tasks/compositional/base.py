@@ -66,7 +66,7 @@ class CompositionalTask(AbstractServiceNowTask):
         if self.level == 2:
             start_rel_url = "/now/nav/ui/home"
         else:
-            self.private_task_id = "PTSK" + str(id(self) % (10**8)).zfill(8)
+            self.private_task_id = "PTSK" + str(self.random.randint(0, 10**8)).zfill(8)
             self.sys_id = None
             start_rel_url = ""  # For level 3 tasks, the start URL depends on the sys ID of the private task created for it
 

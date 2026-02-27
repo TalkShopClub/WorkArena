@@ -2,9 +2,9 @@
 Dashboard retrieval and do action comp tasks
 """
 
+import hashlib
 import json
 from functools import partial
-import random
 import numpy as np
 from typing import List
 
@@ -312,9 +312,8 @@ class DashboardRetrieveIncidentAndDoTask(DashboardRetrieveAndDoTask):
         """
         Retrieve information based on incidents from the dashboard and do the task.
         """
-        self.incident_hashtag = (
-            f"#INC{str(id(self) % (10**8)).zfill(9)}"  # identifier to select problems
-        )
+        _det = int(hashlib.md5(f"inc_{seed}".encode()).hexdigest()[:8], 16) % 10**8
+        self.incident_hashtag = f"#INC{_det:09d}"
         self.chart_title = f"Incidents with hashtag {self.incident_hashtag}"
         super().__init__(
             instance=instance,
@@ -338,7 +337,7 @@ class DashboardRetrieveIncidentAndDoTask(DashboardRetrieveAndDoTask):
                 "The difference between maximum incidents and minimum incidents should be at least two. The number of agents should also be at least 2."
             )
         self.task_description = f"You have to retrieve some information from a dashboard chart based on the description below. The chart presents the number of 'incidents' assigned to different agents. After retrieving the information, you will be asked to use it to complete a task.\n \n"
-        self.task_description += f"Title of the report: {self.incident_hashtag}\n\n"
+        self.task_description += f"Title of the report: {self.chart_title}\n\n"
         if self.level == 3:
             self.task_description += f"Referring to the company protocol '{self.protocol_name}' (located in the 'Company Protocols' knowledge base), complete the dashboard retrieval task.\n\n"
         self.short_description = (
@@ -389,20 +388,17 @@ class DashboardRetrieveIncidentAndDoTask(DashboardRetrieveAndDoTask):
         self.all_incident_numbers = [incident["number"] for incident in all_existing_incidents]
 
         self.new_incident_numbers = []
+        _id_prefix = str(self.random.randint(0, 10**8)).zfill(8)[:4]
         for _ in range(number_assignments):
             incident_number = (
-                self.prefix
-                + str(id(self) % (10**8)).zfill(8)[:4]
-                + str(self.random.randint(1000, 9999))
+                self.prefix + _id_prefix + str(self.random.randint(1000, 9999))
             )
             while (
                 incident_number in self.all_incident_numbers
                 or incident_number in self.new_incident_numbers
             ):
                 incident_number = (
-                    self.prefix
-                    + str(id(self) % (10**8)).zfill(8)[:4]
-                    + str(random.randint(1000, 9999))
+                    self.prefix + _id_prefix + str(self.random.randint(1000, 9999))
                 )
             self.new_incident_numbers.append(incident_number)
 
@@ -563,9 +559,8 @@ class DashboardRetrieveIncidentAndDoInfeasibleTask(DashboardRetrieveAndDoInfeasi
         """
         Retrieve information based on incidents from the dashboard and do the task.
         """
-        self.incident_hashtag = (
-            f"#INC{str(id(self) % (10**8)).zfill(9)}"  # identifier to select problems
-        )
+        _det = int(hashlib.md5(f"inc_{seed}".encode()).hexdigest()[:8], 16) % 10**8
+        self.incident_hashtag = f"#INC{_det:09d}"
         self.chart_title = f"Incidents with hashtag {self.incident_hashtag}"
         super().__init__(
             instance=instance,
@@ -637,18 +632,17 @@ class DashboardRetrieveIncidentAndDoInfeasibleTask(DashboardRetrieveAndDoInfeasi
         self.all_incident_numbers = [incident["number"] for incident in all_existing_incidents]
 
         self.new_incident_numbers = []
+        _id_prefix = str(self.random.randint(0, 10**8)).zfill(8)[:4]
         for _ in range(number_assignments):
             incident_number = (
-                self.prefix + str(id(self) % (10**8)).zfill(8)[:4] + str(random.randint(1000, 9999))
+                self.prefix + _id_prefix + str(self.random.randint(1000, 9999))
             )
             while (
                 incident_number in self.all_incident_numbers
                 or incident_number in self.new_incident_numbers
             ):
                 incident_number = (
-                    self.prefix
-                    + str(id(self) % (10**8)).zfill(8)[:4]
-                    + str(random.randint(1000, 9999))
+                    self.prefix + _id_prefix + str(self.random.randint(1000, 9999))
                 )
             self.new_incident_numbers.append(incident_number)
 
@@ -807,9 +801,8 @@ class DashboardRetrieveCatalogAndDoTask(DashboardRetrieveAndDoTask):
         """
         Retrieve information based on incidents from the dashboard and do the task.
         """
-        self.catalog_hashtag = (
-            f"#CAT{str(id(self) % (10**8)).zfill(9)}"  # identifier to select problems
-        )
+        _det = int(hashlib.md5(f"cat_{seed}".encode()).hexdigest()[:8], 16) % 10**8
+        self.catalog_hashtag = f"#CAT{_det:09d}"
         self.chart_title = f"Catalog with hashtag {self.catalog_hashtag}"
         super().__init__(
             instance=instance,
@@ -1088,9 +1081,8 @@ class DashboardRetrieveCatalogAndDoInfeasibleTask(DashboardRetrieveAndDoInfeasib
         """
         Retrieve information based on incidents from the dashboard and do the task.
         """
-        self.catalog_hashtag = (
-            f"#CAT{str(id(self) % (10**8)).zfill(9)}"  # identifier to select problems
-        )
+        _det = int(hashlib.md5(f"cat_{seed}".encode()).hexdigest()[:8], 16) % 10**8
+        self.catalog_hashtag = f"#CAT{_det:09d}"
         self.chart_title = f"Catalog with hashtag {self.catalog_hashtag}"
         super().__init__(
             instance=instance,

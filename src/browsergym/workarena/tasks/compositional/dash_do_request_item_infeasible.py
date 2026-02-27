@@ -1,4 +1,3 @@
-import random
 from playwright.sync_api._generated import Page
 from typing import Tuple
 
@@ -78,12 +77,12 @@ class DashboardRetrieveIncidentAndRequestItemInfeasibleTask(
         requested_item_numbers = []
 
         for _ in range(len(agent_full_names)):
-            requested_item_number = "RITM" + str(random.randint(1000000, 9999999))
+            requested_item_number = "RITM" + str(self.random.randint(1000000, 9999999))
             while (
                 requested_item_number in current_requested_items_numbers
                 or requested_item_number in requested_item_numbers
             ):
-                requested_item_number = "RITM" + str(random.randint(1000000, 9999999))
+                requested_item_number = "RITM" + str(self.random.randint(1000000, 9999999))
             requested_item_numbers.append(requested_item_number)
 
         self.requested_item_numbers = requested_item_numbers

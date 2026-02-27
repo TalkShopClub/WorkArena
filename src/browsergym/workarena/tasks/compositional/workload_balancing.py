@@ -81,7 +81,7 @@ class WorkloadBalancingTask(CompositionalTask):
         )
 
         self.problem_hashtag = (
-            f"#PRB{str(id(self) % (10**8)).zfill(9)}"  # identifier to select problems
+            f"#PRB{str(self.random.randint(0, 10**8)).zfill(9)}"  # identifier to select problems
         )
         self.task_description = None
         self.short_description = None

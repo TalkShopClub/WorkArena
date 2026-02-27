@@ -71,7 +71,7 @@ class OffBoardUserTask(CompositionalTask, HumanEvalTask):
         first_name = fake.first_name() + "-" + fake.first_name()
         last_name = fake.last_name() + "-" + fake.last_name()
         self.user_full_name = first_name + " " + last_name
-        self.laptop_asset_tag = "P" + str(id(self) % (10**8)).zfill(8)
+        self.laptop_asset_tag = "P" + str(self.random.randint(0, 10**8)).zfill(8)
 
         # Create user
         self.user_name, _, self.user_sys_id = create_user(
