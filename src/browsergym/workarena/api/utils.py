@@ -62,13 +62,30 @@ def table_api_call(
         params=params,
         json=json,
     )
+
+    # Check for HTTP success code before accessing response body
+    try:
+        response.raise_for_status()
+    except HTTPError:
+        try:
+            body = response.json()
+        except Exception:
+            body = response.text[:500]
+        raise HTTPError(
+            f"ServiceNow API error: {response.status_code} {response.reason} "
+            f"on {method} /api/now/table/{table} — {body}"
+        )
+
     if method == "POST":
-        sys_id = response.json()["result"]["sys_id"]
+        resp_json = response.json()
+        if "result" not in resp_json:
+            raise HTTPError(
+                f"ServiceNow API returned unexpected response on POST /api/now/table/{table}: "
+                f"{str(resp_json)[:500]}"
+            )
+        sys_id = resp_json["result"]["sys_id"]
         data = {}
         params = {"sysparm_query": f"sys_id={sys_id}"}
-
-    # Check for HTTP success code (fail otherwise)
-    response.raise_for_status()
 
     record_exists = False
     num_retries = 0
