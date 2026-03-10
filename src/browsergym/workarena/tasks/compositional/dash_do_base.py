@@ -865,7 +865,7 @@ class DashboardRetrieveCatalogAndDoTask(DashboardRetrieveAndDoTask):
             "Apple Watch": "Apple Watch",
             "Apple MacBook Pro 15": 'Apple MacBook Pro 15"',
             "Development Laptop (PC)": "Development Laptop (PC)",
-            "Loaner Laptop": "Notebook Computer Loaner",
+            "Loaner Laptop": "Loaner Laptop",
         }
 
         # shuffle
@@ -1150,7 +1150,7 @@ class DashboardRetrieveCatalogAndDoInfeasibleTask(DashboardRetrieveAndDoInfeasib
             "Apple Watch": "Apple Watch",
             "Apple MacBook Pro 15": 'Apple MacBook Pro 15"',
             "Development Laptop (PC)": "Development Laptop (PC)",
-            "Loaner Laptop": "Notebook Computer Loaner",
+            "Loaner Laptop": "Loaner Laptop",
         }
 
         # shuffle

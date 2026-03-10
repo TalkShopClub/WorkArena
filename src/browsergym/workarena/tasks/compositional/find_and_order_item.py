@@ -327,7 +327,7 @@ class FilterRequestedItemsAndOrderLoanerLaptopTask(FilterRequestedItemsAndOrderC
             seed=seed,
             instance=instance,
             fixed_config=fixed_config,
-            fixed_request_item="Notebook Computer Loaner",
+            fixed_request_item="Loaner Laptop",
             level=level,
             order_task_class=OrderLoanerLaptopTask,
         )
