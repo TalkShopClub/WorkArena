@@ -145,7 +145,7 @@ class CompositionalTask(AbstractServiceNowTask):
             )
 
         # For level 2, include all substeps in the goal
-        # For level 3, the goal is already set in the private task
+        # For level 3, include the full task description so the agent sees it at every step
         if self.level == 2:
             task_intro = self.short_description + "\n"
             # Get the protocol to follow for the task and pre-pend it to the goal
@@ -163,7 +163,12 @@ class CompositionalTask(AbstractServiceNowTask):
                 i += 1
 
         elif self.level == 3:
-            goal = f"Please complete the following task."
+            goal = (
+                self.task_description
+                + "\n\nDo not close or update the private task status at the start. "
+                "The task description tells you what work to do elsewhere in the system. "
+                "Complete that work first, then return to mark the task closed."
+            )
 
         return goal, {}
 
